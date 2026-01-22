@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills | Isaac Glenu</title>
+
+    <!-- Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        electricBlue: '#2563eb', // Primary Action
+                        teal: {
+                            500: '#14b8a6', // Medical/Tech Accent
+                            50: '#f0fdfa',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background: linear-gradient(to bottom, #E0F7FA 0%, #ffffff 50%);
+            min-height: 100vh;
+        }
+
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-electricBlue selection:text-white">
+
+    <!-- Header -->
+    <!-- Header (Dark Cyan Identity) -->
+    <nav class="sticky top-0 z-50 bg-cyan-800 h-20 shadow-lg flex items-center">
+        <div class="max-w-7xl mx-auto px-8 w-full flex items-center justify-between">
+            <!-- Identity -->
+            <a href="index.html"
+                class="text-2xl font-bold uppercase tracking-widest text-white hover:text-cyan-300 transition-colors">
+                ISAAC GLENU
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-100">
+                <a href="index.html" class="hover:text-cyan-300 transition-colors">Home</a>
+                <a href="education.html" class="hover:text-cyan-300 transition-colors">Education</a>
+                <a href="experience.html" class="hover:text-cyan-300 transition-colors">Experience</a>
+                <a href="projects.html" class="hover:text-cyan-300 transition-colors">Projects</a>
+                <a href="skills.html" class="text-cyan-300 font-bold transition-colors">Skills</a>
+            </div>
+
+            <!-- Mobile Menu Icon (White) -->
+            <button class="md:hidden text-white">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Skills Matrix -->
+    <section class="pt-32 pb-24 md:pt-48">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Technical Proficiency</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Hardware -->
+                <div
+                    class="bg-white/90 backdrop-blur border border-white/50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <i data-lucide="cpu" class="text-electricBlue"></i> Hardware
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">SolidWorks
+                            (CAD)</span>
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">PCB
+                            Design</span>
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">3D
+                            Printing</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Circuitry</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Arduino</span>
+                    </div>
+                </div>
+
+                <!-- Software -->
+                <div
+                    class="bg-white/90 backdrop-blur border border-white/50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <i data-lucide="code-2" class="text-teal-500"></i> Software
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Python
+                            (PyTorch)</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">NumPy</span>
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">C++</span>
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">SQL</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">MATLAB</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">HTML/CSS</span>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div
+                    class="bg-white/90 backdrop-blur border border-white/50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <i data-lucide="wrench" class="text-slate-500"></i> Tools
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Power
+                            BI</span>
+                        <span
+                            class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">AutoCAD</span>
+                        <span class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Git</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-100/50 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+            <p>&copy; 2026 Isaac Glenu. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="index.html" class="hover:text-electricBlue transition-colors">Back to Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
