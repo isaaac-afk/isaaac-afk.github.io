@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" fill="none">
+<defs>
+ <mask id="reading-space"><rect width="1440" height="900" fill="white"/><rect x="713" y="495" width="360" height="298" rx="18" fill="#444"/></mask>
+ <g id="r"><path d="M0 0h12l4-6 8 12 8-12 8 12 8-12 4 6h12"/></g>
+ <g id="c"><path d="M0 0h23m0-10v20m8-20v20m0-10h23"/></g>
+ <g id="g"><path d="M0 0v12m-12 0h24m-18 6h12m-9 6h6"/></g>
+ <g id="port"><rect x="0" y="0" width="30" height="90" rx="2"/><path d="M7 15h16m-16 20h16m-16 20h16m-16 20h16"/></g>
+</defs>
+<g mask="url(#reading-space)"><g stroke="#7891a4" stroke-width="1.1" opacity=".5" stroke-linecap="square" stroke-linejoin="round">
+ <!-- Supply, filtering, regulator and logic rail. -->
+ <path d="M36 178h55v44h38m64 0h45m-28 0v45m0 54v30h42m-42 0h-49V408H55v140h73m64 0h47v62m0 54v37H55v83h200"/>
+ <use href="#r" x="129" y="222"/><use href="#c" transform="translate(210 267) rotate(90)"/>
+ <use href="#r" x="128" y="548"/><use href="#c" transform="translate(239 610) rotate(90)"/>
+ <use href="#g" x="210" y="351"/><use href="#g" x="239" y="701"/>
+ <rect x="238" y="195" width="128" height="54" rx="2"/><path d="M366 222h80v44m0 54v29h75m-75 0v56h-47m-64 0h-62v78h42m64 0h66v42"/>
+ <use href="#c" transform="translate(446 266) rotate(90)"/><use href="#r" x="335" y="405"/><use href="#r" x="315" y="483"/>
+ <use href="#g" x="445" y="525"/>
+ <path d="M302 249v37h62m-62-91v-37h173v47h92v91h65"/>
+ <!-- Controller and distinct parallel signal routes. -->
+ <rect x="334" y="582" width="188" height="110" rx="3"/>
+ <path d="M239 610h95m-31 20h31m-31 20h31m-31 20h31m188-60h58v-36h47v-63h39m-144 119h72v-35h38v-53h34m-144 108h86v-34h30v-43h28m-144 97h100v-33h22v-33h22M360 692v50h68m0-50v91h238m-214-91v36h166v40h48"/>
+ <path d="M666 484v146m0 73v94"/>
+ <use href="#port" x="666" y="499"/>
+ <rect x="676" y="703" width="20" height="94" rx="2"/>
+ <path d="M683 720h6m-6 20h6m-6 20h6m-6 20h6M388 582v-31m28 31v-31m28 31v-31m28 31v-31"/>
+ <!-- Motor driver and external interface along the quiet right margin. -->
+ <path d="M930 111h343v90h-50m-64 0h-47v39m0 54v29h155v57h-28m-64 0h-91v76h189v90h-34m-64 0h-65v42m0 54v30h123v88h-52m-64 0h-67"/>
+ <use href="#r" x="1159" y="201"/><use href="#c" transform="translate(1112 240) rotate(90)"/>
+ <use href="#r" x="1175" y="380"/><use href="#r" x="1175" y="546"/>
+ <use href="#c" transform="translate(1110 588) rotate(90)"/><use href="#r" x="1157" y="760"/>
+ <use href="#g" x="1110" y="672"/>
+ <rect x="1286" y="238" width="100" height="196" rx="3"/>
+ <path d="M1273 265h13m-13 24h13m-13 24h13m-13 24h13m0 56h-13m13 22h-13m113-150h25v321h-60v105h60v99h-25m-116 0h-74v36H893v-22h-64m-64 0h-52"/>
+ <use href="#r" x="765" y="776"/>
+ <path d="M906 815h326m-326 8h190m-107-151h-91v47h-69m-64 0h-52"/>
+ <use href="#c" x="765" y="719"/>
+ <circle cx="210" cy="222" r="2.4" fill="#7891a4"/><circle cx="446" cy="349" r="2.4" fill="#7891a4"/><circle cx="239" cy="610" r="2.4" fill="#7891a4"/><circle cx="1273" cy="323" r="2.4" fill="#7891a4"/>
+</g>
+<g fill="#5b758b" opacity=".55" font-family="monospace" font-size="10" letter-spacing="1">
+ <text x="42" y="167">24V IN</text><text x="141" y="206">R01</text><text x="222" y="304">C01</text>
+ <text x="254" y="227">3V3 REGULATOR</text><text x="310" y="150">LOGIC SUPPLY</text>
+ <text x="344" y="393">10k</text><text x="134" y="533">R02</text>
+ <text x="357" y="616">U01 / CONTROLLER</text><text x="387" y="644" font-size="18" letter-spacing="2">STM32</text><text x="372" y="671">PWM · ADC · GPIO</text>
+ <text x="672" y="486">J01</text><text x="649" y="817">ENCODER</text>
+ <text x="1171" y="186">R03</text><text x="1126" y="273">C04</text><text x="1300" y="264">U02</text>
+ <text x="1300" y="295">TOOL</text><text x="1300" y="311">DRIVER</text><text x="1300" y="405">PWM IN</text>
+ <text x="1181" y="532">R04</text><text x="1124" y="625">C05</text><text x="766" y="705">100nF</text>
+ <text x="907" y="851">CONTROL CIRCUIT / CONCEPT STUDY</text>
+</g></g></svg>

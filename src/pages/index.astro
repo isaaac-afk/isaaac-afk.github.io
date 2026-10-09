@@ -1,0 +1,255 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource/ibm-plex-mono/400.css';
+import '../styles/global.css';
+import { projects, profile, components } from '../data/portfolio';
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Isaac Glenu — biomedical engineering, embedded intelligence, and robotic systems. Explore the work, one component at a time.">
+<meta name="theme-color" content="#dcecf8">
+<link rel="icon" type="image/svg+xml" href={asset('favicon.svg')}>
+<title>Isaac Glenu — From components up.</title>
+</head>
+<body>
+<div id="blue-studio-background" aria-hidden="true"></div>
+<a class="skip-link" href="#experience">Skip to content</a>
+<header class="site-header">
+<a class="wordmark" href="#overview" aria-label="Isaac Glenu, home">ig<span>.</span>
+</a>
+<nav aria-label="Main navigation">
+<a href="#experience">Experience</a>
+<a href="#about">About</a>
+<a href="#ecg">Projects</a>
+<a href="#contact">Contact</a>
+</nav>
+<span class="header-note">Engineering with intent.</span>
+</header>
+<div id="studio" aria-label="Conceptual six-axis manipulator visualization">
+<img id="scene-poster" src={asset('images/assembled.webp')} width="640" height="640" alt="Assembled conceptual six-axis manipulator with blue shells and metal joints." fetchpriority="high">
+<canvas id="arm-canvas" tabindex="0" aria-label="Interactive conceptual manipulator. Use Inspect arm for keyboard-accessible controls.">
+</canvas>
+<div class="studio-topline">
+<span>MANIPULATOR–V0</span>
+<span>CONCEPT STUDY / 6 DOF</span>
+</div>
+<div class="studio-baseline">
+<span id="scene-status" role="status" aria-live="polite">MANIPULATOR-V0 // READY</span>
+<span>
+<span id="assembly-percent">100%</span> ASSEMBLED</span>
+</div>
+<p class="art-caption">Conceptual portfolio artwork. Not a clinical device.</p>
+</div>
+<div class="scene-actions">
+<button id="inspect-arm" type="button">
+<svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M7 2H2v5m11-5h5v5M2 13v5h5m11-5v5h-5M7 10h6m-3-3v6">
+</path>
+</svg>Inspect arm</button>
+<button id="guide-arm" type="button" hidden aria-label="Guide arm with arrow keys. Escape returns to automatic motion." title="Move your pointer, or focus here and use the arrow keys">Guide arm</button>
+<button id="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
+</div>
+<aside id="inspection-panel" hidden aria-label="Arm inspection controls">
+<div class="inspection-heading">
+<h2>Inside the system.</h2>
+<button id="exit-inspect" type="button">Return to story <svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M4 16 16 4M5 4h11v11">
+</path>
+</svg>
+</button>
+</div>
+<p>Drag to rotate. Use the arrow keys while the canvas is focused to turn the arm.</p>
+<label for="assembly-range">Assembly</label>
+<input id="assembly-range" type="range" min="0" max="100" value="0">
+<label for="component-select">Explore a component</label>
+<select id="component-select">
+{components.map(([id,name]) => <option value={id}>{name}</option>)}
+</select>
+<h3 id="component-name">Base &amp; drive</h3>
+<p id="component-description">A grounded foundation for the assembly.</p>
+<button id="reset-view" type="button" class="text-link">Reset view</button>
+</aside>
+<span id="flying-letter" aria-hidden="true">E</span>
+<main id="main-content" data-reading>
+<section class="hero story-section" id="overview" data-story="overview" data-side="hero">
+<h1 id="hero-name" aria-label="Isaac Glenu">
+<span id="hero-name-text">
+<span class="name-first">ISAAC</span>
+<br class="name-break"> GL<span id="source-letter">E</span>NU</span>
+</h1>
+<div class="hero-identity">
+<p class="hero-discipline">Biomedical engineering.<br>Embedded intelligence.<br>Systems that move.</p>
+</div>
+<div class="hero-bottom">
+<p>I build systems,<br>
+<em>from components up.</em>
+</p>
+<a class="arrow-link" href="#experience">Explore the work <svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M10 3v14m-5-5 5 5 5-5">
+</path>
+</svg>
+</a>
+</div>
+</section>
+<section class="story-section experience-section" id="experience" data-story="experience" data-side="right">
+<div class="section-copy">
+<div class="experience-dock">
+<h2 class="experience-title" aria-label="Experience">
+<span id="destination-letter">E</span>xperience</h2>
+</div>
+<article class="experience-item featured">
+<h3>Upgraded</h3>
+<div class="item-meta">
+<span>Software Engineering Intern</span>
+<span>MAY–AUG 2026</span>
+</div>
+<p>Built across the stack on PerfectDraft, an AI-assisted grant-writing product. Connected a Next.js and React interface with Supabase and Claude-powered workflows.</p>
+<ul class="technology-list">
+<li>TypeScript</li>
+<li>Next.js</li>
+<li>Supabase</li>
+<li>Claude / Composio</li>
+</ul>
+</article>
+<div id="additional-experience">
+<article class="experience-item">
+<h3>Structural Biomechanics Lab</h3>
+<div class="item-meta">
+<span>Research Assistant</span>
+<span>SEP 2026–PRESENT</span>
+</div>
+<p>Supporting experimental setup, data collection, and processing at the University of Waterloo under Professor Chandrashekar.</p>
+</article>
+<article class="experience-item">
+<h3>Biotron &amp; e-NABLE</h3>
+<div class="item-meta">
+<span>Mechanical Team Member</span>
+<span>SEP 2025–MAY 2026</span>
+</div>
+<p>Mechanical design work on hip and exoskeleton systems in SolidWorks, alongside FDM fabrication for a prosthetic hand.</p>
+</article>
+<article class="experience-item">
+<h3>Inspirit AI</h3>
+<div class="item-meta">
+<span>ML Researcher &middot; Research program</span>
+<span>MAY–AUG 2024</span>
+</div>
+<p>Explored coronary risk prediction through machine learning with scikit-learn.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="story-section about-section" id="about" data-story="about" data-side="left">
+<div class="section-copy">
+<h2>Where biology<br>meets the build.</h2>
+<p class="lead">I’m Isaac, a biomedical engineering student at the University of Waterloo, working across hardware, software, and the signals that connect them.</p>
+<p>My projects move between biosignal processing, embedded machine learning, and robotics. I’m interested in the whole system: what we sense, how we interpret it, and what happens next.</p>
+<div class="section-note">
+<span class="signal-dot">
+</span>
+<p>BASc Biomedical Engineering · 2025–2030<br>Medical Devices &amp; Robotics specialization</p>
+</div>
+<figure class="mobile-scene">
+<img src={asset('images/hero.webp')} alt="Exploded conceptual manipulator" loading="lazy">
+<figcaption>From individual parts to a connected system.</figcaption>
+</figure>
+</div>
+</section>
+<div id="projects" class="projects-anchor">
+<span>Selected projects</span>
+<span>HARDWARE ↔ SOFTWARE</span>
+</div>
+{projects.map((project, index) => (
+ <section class="story-section project-section" id={project.id} data-story={project.id} data-side={index % 2 === 0 ? 'left' : 'right'}>
+  <div class="section-copy">
+   <h2>{project.title.split('\n').map((line,i) => <>{i > 0 && <br />}{line}</>)}</h2>
+   <p class="project-field">{project.field}</p><p class="lead">{project.description}</p><p>{project.details}</p>
+   <ul class="technology-list" aria-label="Technologies">{project.tags.map(tag => <li>{tag}</li>)}</ul>
+   <a class="arrow-link project-link" href={project.url} target="_blank" rel="noreferrer">{project.linkLabel}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M5 4h11v11" /></svg></a>
+   <div class="assembly-note"><span class="assembly-mark" aria-hidden="true">{String(index + 1).padStart(2,'0')}</span><div><span>Conceptual component focus</span><p>{project.component}</p></div></div>
+   <figure class="mobile-scene"><img src={asset('images/assembled.webp')} width="640" height="640" alt="Conceptual manipulator with blue shells and metal joints" loading="lazy" /><figcaption>Concept study · {project.component}</figcaption></figure>
+  </div>
+ </section>
+))}
+<section class="story-section skills-section" id="skills" data-story="skills" data-side="left">
+<div class="section-copy">
+<div class="further-work">
+<h3>More explorations</h3>
+<article>
+<h4>SkinSight</h4>
+<p>Skin-lesion classification with EfficientNetB0 on ISIC 2019, with Grad-CAM visualizations to inspect model attention.</p>
+</article>
+<article>
+<h4>FDA adverse-event dashboard</h4>
+<p>A data dashboard for exploring medical-device adverse-event reports.</p>
+</article>
+<a class="arrow-link" href="https://github.com/isaaac-afk" target="_blank" rel="noreferrer">Explore GitHub profile<svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M4 16 16 4M5 4h11v11">
+</path>
+</svg>
+</a>
+</div>
+<h2>A connected<br>toolkit.</h2>
+<dl class="skills-list">
+<div>
+<dt>Signals &amp; intelligence</dt>
+<dd>Python · Signal processing<br>Machine learning · Biosignal analysis</dd>
+</div>
+<div>
+<dt>Embedded systems</dt>
+<dd>STM32 · TinyML<br>Sensors · Embedded inference</dd>
+</div>
+<div>
+<dt>Robotics</dt>
+<dd>ROS 2 · Motion control<br>Mechanical integration</dd>
+</div>
+</dl>
+<h3 class="log-title">Engineering notes</h3>
+<p class="note-intro">Observations from the work. An undated build log.</p>
+<ol class="build-log">
+<li>
+<span>ECG / MODEL</span>
+<p>Quantization changes the accuracy–resource trade-off. Compare the converted model with its floating-point baseline.</p>
+<a href="https://github.com/isaaac-afk/arrhythmia-detection-mcu" target="_blank" rel="noreferrer">Source repository</a>
+</li>
+<li>
+<span>GAIT / EVIDENCE</span>
+<p>A single-subject analysis can expose useful patterns. It cannot establish clinical validity.</p>
+<a href="https://github.com/isaaac-afk/gait-analysis" target="_blank" rel="noreferrer">Source repository</a>
+</li>
+</ol>
+<details class="component-reference">
+<summary>Explore the arm’s components</summary>
+<dl>{components.map(([,name,description]) => <div><dt>{name}</dt><dd>{description}</dd></div>)}</dl>
+</details>
+</div>
+</section>
+<section class="story-section contact-section" id="contact" data-story="contact" data-side="right">
+<div class="section-copy">
+<h2>Let’s build<br>what’s next.</h2>
+<p class="lead">A conversation is a good first component.</p>
+<a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}<svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M4 16 16 4M5 4h11v11">
+</path>
+</svg>
+</a>
+<a class="arrow-link" href="https://github.com/isaaac-afk" target="_blank" rel="noreferrer">Find me on GitHub<svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M4 16 16 4M5 4h11v11">
+</path>
+</svg>
+</a>
+<footer>
+<span>Isaac Glenu</span>
+<a href="#overview">Back to the beginning</a>
+<p>Original conceptual manipulator artwork.<br>Built to tell the story of the work.</p>
+</footer>
+</div>
+</section>
+</main>
+<script>import "../scripts/main";</script>
+</body>
+</html>
