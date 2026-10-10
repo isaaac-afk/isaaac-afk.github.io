@@ -1,4 +1,7 @@
 export const STAGES: readonly string[];
+export const SECTIONS: readonly string[];
+export function stageMarkers(sectionMarkers:number[]):number[];
+export function sectionAt(scroll:number,sectionMarkers:number[]):number;
 export const POSES: readonly number[];
 export type StoryPose={progress:number;chapter:number;gesture:number;fade:number;pickup:number};
 export function clamp(x:number,min?:number,max?:number):number;

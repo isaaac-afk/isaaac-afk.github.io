@@ -11,11 +11,46 @@ export interface Project {
   sources: string[];
 }
 
+export interface Experience {
+  organization: string;
+  role: string;
+  dates: string;
+  summary: string;
+  tags: string[];
+}
+
 export const profile = {
   name: 'Isaac Glenu',
   email: 'isaacglenu@gmail.com',
   github: 'https://github.com/isaaac-afk',
+  linkedin: 'https://www.linkedin.com/in/isaac-glenu7',
+  tagline: 'Toward surgical robotics.',
+  // Shown in the hero beside the pulsing status light. Edit this one string to update it.
+  currentlyBuilding: 'real-time ECG arrhythmia detection on STM32',
 };
+
+export const experience: Experience[] = [
+  {
+    organization: 'Upgraded', role: 'Software Engineering Intern', dates: 'MAY–AUG 2026',
+    summary: 'Shipped PerfectDraft, an AI grant-writing tool for Ontario innovation programs. Built the Next.js + Supabase stack and the Claude + Composio agent that drafts, retrieves, and revises grant sections end-to-end.',
+    tags: ['TypeScript', 'Next.js', 'Supabase', 'Claude API', 'Composio'],
+  },
+  {
+    organization: 'Structural Biomechanics Lab', role: 'Research Assistant', dates: 'SEP 2026–PRESENT',
+    summary: 'Supporting grad-student experiments at the University of Waterloo under Prof. Naveen Chandrashekar — hands-on tissue mechanics setup, data collection, and processing.',
+    tags: ['Experimental mechanics', 'Data processing'],
+  },
+  {
+    organization: 'Biotron & e-NABLE', role: 'Mechanical Team Member', dates: 'SEP 2025–MAY 2026',
+    summary: 'Mechanical design for hip-exoskeleton and prosthetic-hand systems. SolidWorks modelling, FDM fabrication, and iteration with the clinical users.',
+    tags: ['SolidWorks', 'FDM', 'Mechanical design'],
+  },
+  {
+    organization: 'Inspirit AI', role: 'ML Researcher', dates: 'MAY–AUG 2024',
+    summary: 'Built a scikit-learn pipeline predicting coronary risk from clinical features. First exposure to ML applied to cardiac data — direct line to the arrhythmia work that followed.',
+    tags: ['Python', 'scikit-learn', 'Cardiology ML'],
+  },
+];
 
 export const projects: Project[] = [
   {
@@ -27,28 +62,36 @@ export const projects: Project[] = [
     component: 'Wrist control board', sources: ['https://github.com/isaaac-afk/arrhythmia-detection-mcu'],
   },
   {
-    id: 'emg', title: 'Intent,\ninto movement.', field: 'EMG · Pattern recognition',
+    id: 'emg', title: 'Intent,\ntranslated.', field: 'Surface EMG · Myoelectric control',
     description: 'Classifying hand gestures from simulated muscle signals.',
     details: 'A Python pipeline for simulated surface EMG: filtering signals, extracting features, and classifying hand gestures with SciPy and scikit-learn.',
     tags: ['Python', 'SciPy', 'scikit-learn'],
-    url: 'https://github.com/isaaac-afk/emg-gesture-classification', linkLabel: 'View repository', component: 'Articulated instrument jaws',
+    url: 'https://github.com/isaaac-afk/emg-gesture-classification', linkLabel: 'View repository', component: 'End effector',
     sources: ['https://github.com/isaaac-afk/emg-gesture-classification', 'IsaacRobresCVcombine.pdf', 'IsaacSoftresCV.pdf'],
   },
   {
-    id: 'gait', title: 'Movement,\nmeasured.', field: 'Biomechanics · Data analysis',
+    id: 'lattice', title: 'Bone,\nmatched.', field: 'Titanium lattice · Biomimetic design',
+    description: 'Tuning implant stiffness toward bone to counter stress shielding.',
+    details: 'Simple-cubic, octet-truss, and gyroid lattices generated in Python and screened with the Gibson-Ashby scaling law to find the porosity windows that match cortical and trabecular bone. An analytical first pass, with slicer-ready STL exports; FEA is the next step.',
+    tags: ['Python', 'Gibson-Ashby', 'Additive manufacturing'],
+    url: 'https://github.com/isaaac-afk/porous-implant-lattice-study', linkLabel: 'View repository', component: 'Structural frame',
+    sources: ['https://github.com/isaaac-afk/porous-implant-lattice-study'],
+  },
+  {
+    id: 'gait', title: 'Motion,\nmeasured.', field: 'IMU sensor fusion · Biomechanics',
     description: 'Finding structure in the way we walk.',
     details: 'A complementary-filter approach to knee-flexion analysis using HuGaDB sensor data. This single-subject exploration investigates movement patterns; it does not establish clinical validity.',
     tags: ['Python', 'Gait analysis', 'Sensor data'],
-    url: 'https://github.com/isaaac-afk/gait-analysis', linkLabel: 'View repository', component: 'Joint sensor modules',
+    url: 'https://github.com/isaaac-afk/gait-analysis', linkLabel: 'View repository', component: 'Joint sensing',
     sources: ['https://github.com/isaaac-afk/gait-analysis'],
   },
   {
-    id: 'robot', title: 'Components,\ncoordinated.', field: 'Robotics · Motion control',
-    description: 'A four-axis robotic arm, brought together with ROS 2.',
-    details: 'Voice commands travel from Alexa through Flask and ROS 2 to MoveIt 2, a custom C++ controller, and an Arduino-driven four-axis arm. This physical project is separate from the conceptual six-axis artwork shown here.',
-    tags: ['ROS 2', 'MoveIt 2', 'C++', 'Arduino'],
-    url: 'https://github.com/isaaac-afk/ros2-robotic-arm-alexa', linkLabel: 'View repository', component: 'Final assembly',
-    sources: ['https://github.com/isaaac-afk/ros2-robotic-arm-alexa', 'IsaacRobresCVcombine.pdf', 'IsaacSoftresCV.pdf'],
+    id: 'skinsight', title: 'Trust,\nbefore accuracy.', field: 'Dermatology ML · Explainability',
+    description: 'A skin-lesion classifier that shows its work.',
+    details: 'EfficientNet-B0 transfer learning on ISIC 2019, with Grad-CAM heatmaps and a focus score that flags predictions made for the wrong reasons. Educational, not diagnostic.',
+    tags: ['PyTorch', 'EfficientNet-B0', 'Grad-CAM', 'Flask'],
+    url: 'https://github.com/isaaac-afk/skinsight-ai', linkLabel: 'View repository', component: 'Vision head',
+    sources: ['https://github.com/isaaac-afk/skinsight-ai'],
   },
 ];
 

@@ -2,7 +2,8 @@
 import '@fontsource-variable/manrope';
 import '@fontsource/ibm-plex-mono/400.css';
 import '../styles/global.css';
-import { projects, profile, components } from '../data/portfolio';
+import { projects, profile, components, experience } from '../data/portfolio';
+const [featured, ...additional] = experience;
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 ---
 <!DOCTYPE html>
@@ -11,12 +12,12 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Isaac Glenu — biomedical engineering, embedded intelligence, and robotic systems. Explore the work, one component at a time.">
-<meta name="theme-color" content="#dcecf8">
+<meta name="theme-color" content="#FAFAF7">
 <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')}>
 <title>Isaac Glenu — From components up.</title>
 </head>
 <body>
-<div id="blue-studio-background" aria-hidden="true"></div>
+<div id="studio-background" aria-hidden="true"></div>
 <a class="skip-link" href="#experience">Skip to content</a>
 <header class="site-header">
 <a class="wordmark" href="#overview" aria-label="Isaac Glenu, home">ig<span>.</span>
@@ -27,10 +28,10 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <a href="#ecg">Projects</a>
 <a href="#contact">Contact</a>
 </nav>
-<span class="header-note">Engineering with intent.</span>
+<span class="header-note">{profile.tagline}</span>
 </header>
 <div id="studio" aria-label="Conceptual six-axis manipulator visualization">
-<img id="scene-poster" src={asset('images/assembled.webp')} width="640" height="640" alt="Assembled conceptual six-axis manipulator with blue shells and metal joints." fetchpriority="high">
+<img id="scene-poster" src={asset('images/assembled.webp')} width="640" height="640" alt="Assembled conceptual six-axis manipulator with off-white shells and metal joints." fetchpriority="high">
 <canvas id="arm-canvas" tabindex="0" aria-label="Interactive conceptual manipulator. Use Inspect arm for keyboard-accessible controls.">
 </canvas>
 <div class="studio-topline">
@@ -38,7 +39,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <span>CONCEPT STUDY / 6 DOF</span>
 </div>
 <div class="studio-baseline">
-<span id="scene-status" role="status" aria-live="polite">MANIPULATOR-V0 // READY</span>
+<span id="scene-status" role="status" aria-live="polite">MANIPULATOR-V0 // IDLE</span>
 <span>
 <span id="assembly-percent">100%</span> ASSEMBLED</span>
 </div>
@@ -85,9 +86,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <p class="hero-discipline">Biomedical engineering.<br>Embedded intelligence.<br>Systems that move.</p>
 </div>
 <div class="hero-bottom">
-<p>I build systems,<br>
-<em>from components up.</em>
-</p>
+<p class="currently-building"><span class="build-light" aria-hidden="true"></span> <span class="build-label">currently building:</span> <span class="build-subject">{profile.currentlyBuilding}</span></p>
 <a class="arrow-link" href="#experience">Explore the work <svg viewBox="0 0 20 20" aria-hidden="true">
 <path d="M10 3v14m-5-5 5 5 5-5">
 </path>
@@ -102,44 +101,26 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <span id="destination-letter">E</span>xperience</h2>
 </div>
 <article class="experience-item featured">
-<h3>Upgraded</h3>
+<h3>{featured.organization}</h3>
 <div class="item-meta">
-<span>Software Engineering Intern</span>
-<span>MAY–AUG 2026</span>
+<span>{featured.role}</span>
+<span>{featured.dates}</span>
 </div>
-<p>Built across the stack on PerfectDraft, an AI-assisted grant-writing product. Connected a Next.js and React interface with Supabase and Claude-powered workflows.</p>
-<ul class="technology-list">
-<li>TypeScript</li>
-<li>Next.js</li>
-<li>Supabase</li>
-<li>Claude / Composio</li>
-</ul>
+<p>{featured.summary}</p>
+<ul class="technology-list">{featured.tags.map(tag => <li>{tag}</li>)}</ul>
 </article>
 <div id="additional-experience">
+{additional.map(item => (
 <article class="experience-item">
-<h3>Structural Biomechanics Lab</h3>
+<h3>{item.organization}</h3>
 <div class="item-meta">
-<span>Research Assistant</span>
-<span>SEP 2026–PRESENT</span>
+<span>{item.role}</span>
+<span>{item.dates}</span>
 </div>
-<p>Supporting experimental setup, data collection, and processing at the University of Waterloo under Professor Chandrashekar.</p>
+<p>{item.summary}</p>
+<ul class="technology-list">{item.tags.map(tag => <li>{tag}</li>)}</ul>
 </article>
-<article class="experience-item">
-<h3>Biotron &amp; e-NABLE</h3>
-<div class="item-meta">
-<span>Mechanical Team Member</span>
-<span>SEP 2025–MAY 2026</span>
-</div>
-<p>Mechanical design work on hip and exoskeleton systems in SolidWorks, alongside FDM fabrication for a prosthetic hand.</p>
-</article>
-<article class="experience-item">
-<h3>Inspirit AI</h3>
-<div class="item-meta">
-<span>ML Researcher &middot; Research program</span>
-<span>MAY–AUG 2024</span>
-</div>
-<p>Explored coronary risk prediction through machine learning with scikit-learn.</p>
-</article>
+))}
 </div>
 </div>
 </section>
@@ -171,7 +152,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
    <ul class="technology-list" aria-label="Technologies">{project.tags.map(tag => <li>{tag}</li>)}</ul>
    <a class="arrow-link project-link" href={project.url} target="_blank" rel="noreferrer">{project.linkLabel}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M5 4h11v11" /></svg></a>
    <div class="assembly-note"><span class="assembly-mark" aria-hidden="true">{String(index + 1).padStart(2,'0')}</span><div><span>Conceptual component focus</span><p>{project.component}</p></div></div>
-   <figure class="mobile-scene"><img src={asset('images/assembled.webp')} width="640" height="640" alt="Conceptual manipulator with blue shells and metal joints" loading="lazy" /><figcaption>Concept study · {project.component}</figcaption></figure>
+   <figure class="mobile-scene"><img src={asset('images/assembled.webp')} width="640" height="640" alt="Conceptual manipulator with off-white shells and metal joints" loading="lazy" /><figcaption>Concept study · {project.component}</figcaption></figure>
   </div>
  </section>
 ))}
@@ -180,8 +161,8 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <div class="further-work">
 <h3>More explorations</h3>
 <article>
-<h4>SkinSight</h4>
-<p>Skin-lesion classification with EfficientNetB0 on ISIC 2019, with Grad-CAM visualizations to inspect model attention.</p>
+<h4><a href="https://github.com/isaaac-afk/ros2-robotic-arm-alexa" target="_blank" rel="noreferrer">Voice-controlled robotic arm</a></h4>
+<p>Voice commands travel from Alexa through Flask and ROS 2 to MoveIt 2, a custom C++ controller, and an Arduino-driven four-axis arm.</p>
 </article>
 <article>
 <h4>FDA adverse-event dashboard</h4>
@@ -231,13 +212,18 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <section class="story-section contact-section" id="contact" data-story="contact" data-side="right">
 <div class="section-copy">
 <h2>Let’s build<br>what’s next.</h2>
-<p class="lead">A conversation is a good first component.</p>
+<p class="lead">Every system starts with a conversation.</p>
 <a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}<svg viewBox="0 0 20 20" aria-hidden="true">
 <path d="M4 16 16 4M5 4h11v11">
 </path>
 </svg>
 </a>
-<a class="arrow-link" href="https://github.com/isaaac-afk" target="_blank" rel="noreferrer">Find me on GitHub<svg viewBox="0 0 20 20" aria-hidden="true">
+<a class="arrow-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub<svg viewBox="0 0 20 20" aria-hidden="true">
+<path d="M4 16 16 4M5 4h11v11">
+</path>
+</svg>
+</a>
+<a class="arrow-link" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 20 20" aria-hidden="true">
 <path d="M4 16 16 4M5 4h11v11">
 </path>
 </svg>

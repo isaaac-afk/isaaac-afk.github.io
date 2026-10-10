@@ -1,4 +1,18 @@
 export const STAGES = ['overview','experience','about','ecg','emg','gait','robot','skills','contact'];
+// Page sections, in reading order. The arm's choreography is authored on the nine
+// STAGES above; the project run (ecg … skills) is stretched across however many
+// project sections the page has.
+export const SECTIONS = ['overview','experience','about','ecg','emg','lattice','gait','skinsight','skills','contact'];
+export function stageMarkers(sectionMarkers) {
+  const first=SECTIONS.indexOf('ecg'),last=SECTIONS.indexOf('skills'),firstStage=STAGES.indexOf('ecg'),lastStage=STAGES.indexOf('skills');
+  const at=x=>{const i=Math.min(Math.floor(x),sectionMarkers.length-2);return sectionMarkers[i]+(sectionMarkers[i+1]-sectionMarkers[i])*(x-i);};
+  return STAGES.map((_,i)=>i<=firstStage?sectionMarkers[i]:i>=lastStage?sectionMarkers[i+last-lastStage]:at(first+(i-firstStage)*(last-first)/(lastStage-firstStage)));
+}
+export function sectionAt(scroll, sectionMarkers) {
+  let index=0;
+  while(index < sectionMarkers.length-1 && scroll>=sectionMarkers[index+1]) index++;
+  return index;
+}
 export const POSES = [1,1,0,0,0,0,0,1,1];
 export const clamp = (x,min=0,max=1) => Math.min(max,Math.max(min,x));
 export const smoothstep = x => { const t=clamp(x); return t*t*t*(t*(t*6-15)+10); };

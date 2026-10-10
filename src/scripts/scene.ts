@@ -23,13 +23,13 @@ export async function createScene(canvas:HTMLCanvasElement,onSelect:(id:string)=
  renderer.info.autoReset=false;
  const scene=new THREE.Scene();
  const pmrem=new THREE.PMREMGenerator(renderer);const room=new RoomEnvironment();const environment=pmrem.fromScene(room,.025);scene.environment=environment.texture;scene.environmentIntensity=.58;room.dispose();pmrem.dispose();
- scene.add(new THREE.HemisphereLight(0xe8f0ff,0x263d58,.38));
+ scene.add(new THREE.HemisphereLight(0xf4f1ea,0x4a4338,.38));
  const key=new THREE.DirectionalLight(0xfff3dd,2.4);key.position.set(-3,7,5);scene.add(key);
  const shadowData=new Uint8Array(64*64*4);for(let y=0;y<64;y++)for(let x=0;x<64;x++){const i=(y*64+x)*4;const r=Math.hypot((x-31.5)/31.5,(y-31.5)/31.5);shadowData[i]=90;shadowData[i+1]=80;shadowData[i+2]=64;shadowData[i+3]=Math.round(Math.max(0,1-r)**2*50);}
  const contactTexture=new THREE.DataTexture(shadowData,64,64);contactTexture.needsUpdate=true;contactTexture.magFilter=THREE.LinearFilter;
  const ground=new THREE.Mesh(new THREE.PlaneGeometry(2.3,1.8),new THREE.MeshBasicMaterial({map:contactTexture,transparent:true,depthWrite:false}));ground.rotation.x=-Math.PI/2;scene.add(ground);
- const fill=new THREE.DirectionalLight(0xdce8ff,.55);fill.position.set(5,2,4);scene.add(fill);
- const rim=new THREE.DirectionalLight(0xbdd9ff,1.5);rim.position.set(3,5,-5);scene.add(rim);
+ const fill=new THREE.DirectionalLight(0xf1ece4,.55);fill.position.set(5,2,4);scene.add(fill);
+ const rim=new THREE.DirectionalLight(0xf3ede3,1.5);rim.position.set(3,5,-5);scene.add(rim);
  const camera=new THREE.PerspectiveCamera(34,1,.1,100);
  const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.08;controls.enablePan=false;controls.enableZoom=true;controls.enabled=false;controls.minDistance=1.2;controls.maxDistance=22;
  const gltf=await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/manipulator.glb`).catch(error=>{controls.dispose();ground.geometry.dispose();ground.material.dispose();contactTexture.dispose();environment.dispose();renderer.dispose();throw error;});

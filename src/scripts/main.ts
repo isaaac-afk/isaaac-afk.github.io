@@ -2,7 +2,7 @@ import './performance-probe';
 import gsap from 'gsap';
 import {setLabMotion} from './lab-clock.mjs';
 import {letterPath} from './letter-path.mjs';
-import {STAGES,sampleStory} from './story.mjs';
+import {SECTIONS,sampleStory,sectionAt,stageMarkers} from './story.mjs';
 import type {SceneState,NamePose} from './scene';
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T|null;
 const canvas=$<HTMLCanvasElement>('arm-canvas'),studio=$('studio'),poster=$<HTMLImageElement>('scene-poster');
@@ -12,7 +12,7 @@ const select=$<HTMLSelectElement>('component-select'),status=$('scene-status');
 const componentInfo:Record<string,[string,string]>={base:['Base assembly','The foundation carries the arm and routes power into the shoulder.'],shoulder:['Shoulder drive','A rotary drive and reduction stage position the upper arm.'],elbow:['Elbow joint','A second major pivot folds the arm through its working envelope.'],wrist:['Wrist assembly','Compact rotary stages orient the tool at the end of the arm.'],pcb:['STM32 control board','An illustrative embedded controller connects sensing and actuation. Isaac’s ECG project uses an STM32F411.'],jaws:['End-effector jaws','Paired articulated fingers illustrate controlled tool motion.'],sensors:['Joint sensors','Sensor modules illustrate feedback for position and movement.'],plate:['Titanium tool plate','An illustrative mounting interface connects the tool to the wrist.']};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),narrow=matchMedia('(max-width: 800px)');
 let motion=!reduced.matches;try{motion=motion&&localStorage.getItem('isaac-motion')!=='off';}catch{}
-let inspecting=false,loading=false,markers:number[]=[];
+let inspecting=false,loading=false,markers:number[]=[],sectionMarkers:number[]=[],section=0;
 let scene:Awaited<ReturnType<typeof import('./scene').createScene>>|undefined;
 let pose={...sampleStory(0,[]),side:0};const animated={...pose};let lastPoster='',lastStatus='';
 let crossings:{start:number;end:number;from:number;to:number}[]=[];
@@ -73,11 +73,11 @@ function composition(){const c=animated.chapter;
  style(identity,'transform',`translate3d(0,${nameLift()}px,0)`);
  style(bottom,'transform',`translate3d(0,${nameLift()}px,0)`);
  syncLetterOwnership(animated.pickup);updateLetter();
- const chapter=STAGES[Math.round(c)]||'overview';if(document.body.dataset.chapter!==chapter)document.body.dataset.chapter=chapter;
+ const chapter=SECTIONS[section]||'overview';if(document.body.dataset.chapter!==chapter)document.body.dataset.chapter=chapter;
 }
 function selected(id:string){const info=componentInfo[id]||componentInfo.base;$('component-name')!.textContent=info[0];$('component-description')!.textContent=info[1];if(select)select.value=id;}
-function measure(){const offset=narrow.matches?Math.min(innerHeight*.34,340)+32:innerHeight*.25;markers=STAGES.map((id,i)=>{const el=document.getElementById(id);return i===0?0:el?el.getBoundingClientRect().top+scrollY+(narrow.matches?parseFloat(getComputedStyle(el).paddingTop):0)-offset:0;});measureLetters();if(!narrow.matches&&!reduced.matches)markers[1]=dockScroll+innerHeight*1.45;
- markers[8]=Math.min(markers[8],document.documentElement.scrollHeight-innerHeight); crossings=[];let from=0;for(let i=2;i<STAGES.length;i++){const previous=document.querySelector<HTMLElement>(`#${STAGES[i-1]} .section-copy`)!,next=document.querySelector<HTMLElement>(`#${STAGES[i]} .section-copy`)!;const to=next.closest('section')?.getAttribute('data-side')==='left'?1:0;if(to!==from){const start=previous.getBoundingClientRect().bottom+scrollY+24,end=Math.max(start+innerHeight*.2,next.getBoundingClientRect().top+scrollY-innerHeight-24);crossings.push({start,end,from,to});}from=to;}
+function measure(){const offset=narrow.matches?Math.min(innerHeight*.34,340)+32:innerHeight*.25;sectionMarkers=SECTIONS.map((id,i)=>{const el=document.getElementById(id);return i===0?0:el?el.getBoundingClientRect().top+scrollY+(narrow.matches?parseFloat(getComputedStyle(el).paddingTop):0)-offset:0;});measureLetters();if(!narrow.matches&&!reduced.matches)sectionMarkers[1]=dockScroll+innerHeight*1.45;
+ const last=sectionMarkers.length-1;sectionMarkers[last]=Math.min(sectionMarkers[last],document.documentElement.scrollHeight-innerHeight);markers=stageMarkers(sectionMarkers); crossings=[];let from=0;for(let i=2;i<SECTIONS.length;i++){const previous=document.querySelector<HTMLElement>(`#${SECTIONS[i-1]} .section-copy`)!,next=document.querySelector<HTMLElement>(`#${SECTIONS[i]} .section-copy`)!;const to=next.closest('section')?.getAttribute('data-side')==='left'?1:0;if(to!==from){const start=previous.getBoundingClientRect().bottom+scrollY+24,end=Math.max(start+innerHeight*.2,next.getBoundingClientRect().top+scrollY-innerHeight-24);crossings.push({start,end,from,to});}from=to;}
  update();scene?.resize();}
 function draw(){if(animated.chapter<1.9)dropAnchor();const lane=smooth((animated.chapter-1)/.3);const state:SceneState={...animated,viewX:-.2*(1-lane)+.52*animated.side*lane,viewWidth:1-.56*lane,progress:inspecting?Number(range?.value||100)/100:animated.chapter>=4?1:animated.chapter>=3.15?smooth((animated.chapter-3.15)/.85):animated.progress,motion:motion&&!reduced.matches,inspect:inspecting};
  setLabMotion(motion&&!reduced.matches&&!inspecting&&!narrow.matches);
@@ -86,15 +86,16 @@ function draw(){if(animated.chapter<1.9)dropAnchor();const lane=smooth((animated
  scene?.setState(state);scene?.setVisible(true);studio?.classList.toggle('is-ready',Boolean(scene));document.body.classList.toggle('has-webgl',Boolean(scene));
  const percent=Math.round(state.progress*100);if(percent!==lastPercent){$('assembly-percent')!.textContent=`${percent}%`;lastPercent=percent;}
  if(studio)studio.style.setProperty('--scene-opacity','1');
- const chapter=Math.round(animated.chapter);const labels=['LETTER / TRANSFER','EXPERIENCE','SYSTEM BREAKDOWN','ECG / CONTROLLER','EMG / GRIPPER','GAIT / FEEDBACK','ROS 2 / MOTION','SYSTEM COMPLETE','AT REST'];
- const text=inspecting?'MANIPULATOR-V0 // INSPECT':!scene?'MANIPULATOR-V0 // STILL VIEW':`MANIPULATOR-V0 // ${labels[chapter]||labels[0]}`;
+ // Telemetry names the arm component each section stands for.
+ const labels:Record<string,string>={overview:'IDLE',experience:'IN SERVICE',about:percent<100?'DECOMPOSING':'OPERATIONAL',ecg:'WRIST CONTROLLER',emg:'END EFFECTOR',lattice:'STRUCTURAL FRAME',gait:'JOINT SENSING',skinsight:'VISION HEAD',skills:'SYSTEM COMPLETE',contact:'AT REST'};
+ const text=inspecting?'MANIPULATOR-V0 // INSPECT':!scene?'MANIPULATOR-V0 // STILL VIEW':`MANIPULATOR-V0 // ${labels[SECTIONS[section]]||labels.overview}`;
  if(status&&text!==lastStatus){status.textContent=text;lastStatus=text;}
 }
 // Native scrolling owns the page. The arm's timed return never rewinds the document.
 function update(){
- gsap.ticker.add(tick);document.body.classList.toggle('past-hero',scrollY>=(markers[1]||950)-50);if(inspecting)return;pose={...sampleStory(scrollY,markers),side:sideAtScroll(scrollY)};if(markers[2]&&scrollY<markers[3])pose.progress=1-clamp((scrollY-markers[2])/(markers[3]-markers[2]));if(!narrow.matches&&!reduced.matches){const pickupEnd=innerHeight*1.25;pose.pickup=scrollY<pickupEnd?.5*clamp(scrollY/pickupEnd):scrollY<dockScroll?.5+.05*clamp((scrollY-pickupEnd)/(dockScroll-pickupEnd)):.55+.45*clamp((scrollY-dockScroll)/(innerHeight*1.45));}
- const image=pose.chapter<1.35||pose.chapter>6.6?'assembled':'hero';if(poster&&image!==lastPoster){poster.src=`${import.meta.env.BASE_URL}images/${image}.webp`;poster.alt='Conceptual six-axis manipulator with blue shells and metal joints.';lastPoster=image;}
- document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]').forEach(a=>{const id=a.hash.slice(1),chapter=Math.round(pose.chapter);const current=id===STAGES[chapter]||(id==='ecg'&&chapter>=3&&chapter<=6);if(current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+ gsap.ticker.add(tick);document.body.classList.toggle('past-hero',scrollY>=(markers[1]||950)-50);section=sectionAt(scrollY,sectionMarkers);if(inspecting)return;pose={...sampleStory(scrollY,markers),side:sideAtScroll(scrollY)};if(markers[2]&&scrollY<markers[3])pose.progress=1-clamp((scrollY-markers[2])/(markers[3]-markers[2]));if(!narrow.matches&&!reduced.matches){const pickupEnd=innerHeight*1.25;pose.pickup=scrollY<pickupEnd?.5*clamp(scrollY/pickupEnd):scrollY<dockScroll?.5+.05*clamp((scrollY-pickupEnd)/(dockScroll-pickupEnd)):.55+.45*clamp((scrollY-dockScroll)/(innerHeight*1.45));}
+ const image=pose.chapter<1.35||pose.chapter>6.6?'assembled':'hero';if(poster&&image!==lastPoster){poster.src=`${import.meta.env.BASE_URL}images/${image}.webp`;poster.alt='Conceptual six-axis manipulator with off-white shells and metal joints.';lastPoster=image;}
+ document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]').forEach(a=>{const id=a.hash.slice(1);const current=id===SECTIONS[section]||(id==='ecg'&&section>=SECTIONS.indexOf('ecg')&&section<=SECTIONS.indexOf('skinsight'));if(current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
  // The glyph must share the document's current scroll position, without catch-up inertia.
  animated.pickup=pose.pickup;
  // Later chapters are drawn by the existing ticker, once per animation frame.

@@ -81,10 +81,11 @@ export function createMaterialFinisher(renderer: THREE.WebGLRenderer) {
       if (uv) material.anisotropy = .14;
     } else if (/polymer|ceramic|white|shell/.test(name)) {
       moulded = true;
-      material.color.setHex(0x153f70);
-      material.metalness = .12;
-      material.roughness = .38;
-      material.clearcoat = .2;
+      // Muted matte off-white body; joints, PCB and copper keep the warm accents.
+      material.color.setHex(0xe8e6e0);
+      material.metalness = .15;
+      material.roughness = .55;
+      material.clearcoat = 0;
       material.clearcoatRoughness = .25;
       material.ior = 1.46;
       material.envMapIntensity = .8;
@@ -109,7 +110,7 @@ export function createMaterialFinisher(renderer: THREE.WebGLRenderer) {
       material.clearcoat = 0;
       material.envMapIntensity = .55;
     }
-    if (/led|signal|indicator/.test(name)) {material.color.setHex(0x7bd9ff);material.emissive.setHex(0x279cff);material.emissiveIntensity=1.3;}
+    if (/led|signal|indicator/.test(name)) {material.color.setHex(0xd4a574);material.emissive.setHex(0xd4a574);material.emissiveIntensity=1.3;}
     if (uv && (metal || moulded)) {
       if (!material.normalMap) {
         material.normalMap = metal ? brushedNormal : mouldedNormal;
