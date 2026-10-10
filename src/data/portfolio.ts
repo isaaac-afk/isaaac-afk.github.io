@@ -63,7 +63,7 @@ export const projects: Project[] = [
   },
   {
     id: 'emg', title: 'Intent,\ntranslated.', field: 'Surface EMG · Myoelectric control',
-    description: 'Classifying hand gestures from simulated muscle signals.',
+    description: 'Classifying hand gestures from surface-EMG signals modeled on public datasets.',
     details: 'A Python pipeline for simulated surface EMG: filtering signals, extracting features, and classifying hand gestures with SciPy and scikit-learn.',
     tags: ['Python', 'SciPy', 'scikit-learn'],
     url: 'https://github.com/isaaac-afk/emg-gesture-classification', linkLabel: 'View repository', component: 'End effector',
@@ -88,8 +88,8 @@ export const projects: Project[] = [
   {
     id: 'skinsight', title: 'Trust,\nbefore accuracy.', field: 'Dermatology ML · Explainability',
     description: 'A skin-lesion classifier that shows its work.',
-    details: 'EfficientNet-B0 transfer learning on ISIC 2019, with Grad-CAM heatmaps and a focus score that flags predictions made for the wrong reasons. Educational, not diagnostic.',
-    tags: ['PyTorch', 'EfficientNet-B0', 'Grad-CAM', 'Flask'],
+    details: 'A dermatology lesion classifier (ISIC 2019, EfficientNet-B0) with Grad-CAM explainability and a focus score that flags low-trust predictions. Educational tool, not a diagnostic one.',
+    tags: ['Python', 'PyTorch', 'Grad-CAM'],
     url: 'https://github.com/isaaac-afk/skinsight-ai', linkLabel: 'View repository', component: 'Vision head',
     sources: ['https://github.com/isaaac-afk/skinsight-ai'],
   },

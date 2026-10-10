@@ -18,6 +18,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 </head>
 <body>
 <div id="studio-background" aria-hidden="true"></div>
+<div id="scroll-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#experience">Skip to content</a>
 <header class="site-header">
 <a class="wordmark" href="#overview" aria-label="Isaac Glenu, home">ig<span>.</span>
@@ -127,8 +128,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <section class="story-section about-section" id="about" data-story="about" data-side="left">
 <div class="section-copy">
 <h2>Where biology<br>meets the build.</h2>
-<p class="lead">I’m Isaac, a biomedical engineering student at the University of Waterloo, working across hardware, software, and the signals that connect them.</p>
-<p>My projects move between biosignal processing, embedded machine learning, and robotics. I’m interested in the whole system: what we sense, how we interpret it, and what happens next.</p>
+<p class="lead">I’m Isaac, a biomedical engineering student at the University of Waterloo. I work across hardware, software, and the signals that connect them — biosignal processing, embedded ML, and robotics. Building toward surgical robotics.</p>
 <div class="section-note">
 <span class="signal-dot">
 </span>
@@ -145,7 +145,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 <span>HARDWARE ↔ SOFTWARE</span>
 </div>
 {projects.map((project, index) => (
- <section class="story-section project-section" id={project.id} data-story={project.id} data-side={index % 2 === 0 ? 'left' : 'right'}>
+ <section class="story-section project-section" id={project.id} data-story={project.id} data-side="left">
   <div class="section-copy">
    <h2>{project.title.split('\n').map((line,i) => <>{i > 0 && <br />}{line}</>)}</h2>
    <p class="project-field">{project.field}</p><p class="lead">{project.description}</p><p>{project.details}</p>
@@ -236,6 +236,6 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 </div>
 </section>
 </main>
-<script>import "../scripts/main";</script>
+<script>import "../scripts/scroll-progress"; import "../scripts/main";</script>
 </body>
 </html>

@@ -25,13 +25,13 @@ body::before{display:none}
 @media(max-width:800px){.site-header{margin-inline:6%;padding:0}.hero-discipline{font-size:15px}.experience-title{font-size:49px;letter-spacing:-.04em}#studio{top:0;height:650px}.studio-baseline{bottom:32px}.art-caption{font-size:9px}.hero-bottom>p{font-size:20px}}
 
 
-@media(min-width:801px){body[data-chapter=experience] .studio-baseline,body[data-chapter=emg] .studio-baseline,body[data-chapter=gait] .studio-baseline,body[data-chapter=contact] .studio-baseline{left:20%}body[data-chapter=experience] .art-caption,body[data-chapter=emg] .art-caption,body[data-chapter=gait] .art-caption,body[data-chapter=contact] .art-caption{left:20%}}
+@media(min-width:801px){body[data-chapter=experience] .studio-baseline,body[data-chapter=contact] .studio-baseline{left:20%}body[data-chapter=experience] .art-caption,body[data-chapter=contact] .art-caption{left:20%}}
 
 
 
 @media(max-width:800px){body:not(.past-hero) .studio-baseline{display:none}}
 
-@media(min-width:801px){body[data-chapter=experience] .scene-actions,body[data-chapter=emg] .scene-actions,body[data-chapter=gait] .scene-actions,body[data-chapter=contact] .scene-actions{left:5%;right:auto}}@media(max-width:800px){.studio-baseline{display:none}body.past-hero .art-caption{bottom:3px;font-size:8px}}
+@media(min-width:801px){body[data-chapter=experience] .scene-actions,body[data-chapter=contact] .scene-actions{left:5%;right:auto}}@media(max-width:800px){.studio-baseline{display:none}body.past-hero .art-caption{bottom:3px;font-size:8px}}
 @media(max-width:800px){.experience-title{font-size:42px;text-align:right}body[data-chapter=experience]:not(.past-hero) .scene-actions{top:18px;bottom:auto}body[data-chapter=experience]:not(.past-hero) .art-caption{visibility:hidden}}
 
 .experience-title{font-weight:600}
@@ -68,8 +68,8 @@ body::before{display:none}
  .hero #hero-name{left:42vw;top:32svh;width:50vw}
  .hero-identity{left:43vw;top:calc(32svh + 19vw)}
  .hero-bottom{left:43vw;top:calc(32svh + 19vw + 125px)}
- body[data-chapter=overview] .studio-baseline,body[data-chapter=experience] .studio-baseline,body[data-chapter=emg] .studio-baseline,body[data-chapter=gait] .studio-baseline,body[data-chapter=contact] .studio-baseline{left:31%;right:28%}
- body[data-chapter=overview] .art-caption,body[data-chapter=experience] .art-caption,body[data-chapter=emg] .art-caption,body[data-chapter=gait] .art-caption,body[data-chapter=contact] .art-caption{left:31%}
+ body[data-chapter=overview] .studio-baseline,body[data-chapter=experience] .studio-baseline,body[data-chapter=contact] .studio-baseline{left:31%;right:28%}
+ body[data-chapter=overview] .art-caption,body[data-chapter=experience] .art-caption,body[data-chapter=contact] .art-caption{left:31%}
 }
 @media(min-width:801px){
  .hero #hero-name{left:min(42vw,calc(24vw + 27svh));font-size:min(8.5vw,13.6svh)}
@@ -155,3 +155,17 @@ body{position:relative;background:var(--paper)}
 .build-subject{font-weight:500}
 @keyframes build-breathe{from{opacity:1}to{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.build-light{animation:none;opacity:.85}}
+
+/* V3 pacing. Projects share the left reading lane, so the arm holds the right lane through
+   them and those sections need no empty crossing room. Experience and toolkit keep theirs,
+   because the arm changes sides after each. */
+@media(min-width:801px) and (prefers-reduced-motion:no-preference){
+ .story-section:not(.hero):not(.contact-section){padding:10svh 0 34svh;min-height:0}
+ #experience{padding:0 0 110svh}
+ .story-section.skills-section{padding-bottom:110svh}
+}
+.experience-item{padding:16px 0}.experience-item.featured{padding-top:18px}
+@media(max-width:800px){.story-section:not(.hero){padding-bottom:64px}}
+
+/* Reading progress: a 2px accent line along the top edge. */
+#scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--signal);opacity:.6;transform-origin:0 50%;transform:scaleX(0);z-index:50;pointer-events:none}
