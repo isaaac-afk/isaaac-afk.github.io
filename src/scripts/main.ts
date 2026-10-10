@@ -60,10 +60,20 @@ function updateLetter(){
  flyingLetter.style.transform=`translate3d(${point.x-sourceWidth*.16}px,${point.y-sourceHeight*.25}px,0)`;
 }
 function style(el:HTMLElement|null,key:string,value:string){if(el&&el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);}
+// The arm controls sit opposite whatever text is passing behind them, falling back to the arm's side.
+const controls=document.querySelector<HTMLElement>('.scene-actions');
+const readingColumns=[...document.querySelectorAll<HTMLElement>('.section-copy,.hero-identity,.hero-bottom,.projects-anchor')];
+let armSide='left';
+function placeControls(){
+ if(!controls)return;const c=controls.getBoundingClientRect();let left=false,right=false;
+ for(const el of readingColumns){const r=el.getBoundingClientRect();if(!r.height||r.bottom<c.top-24||r.top>c.bottom+24)continue;if(r.left+r.width/2<innerWidth/2)left=true;else right=true;}
+ const side=left&&!right?'right':right&&!left?'left':armSide;if(document.body.dataset.armSide!==side)document.body.dataset.armSide=side;
+}
 function composition(){const c=animated.chapter;
  // Captions follow the render viewport; the actual canvas never changes size.
  const lane=smooth((c-1)/.3);
  style(studio,'--caption-left',`${5+52*animated.side*lane}%`);
+ armSide=animated.side*lane>.5?'right':'left';placeControls();
  style(studio,'--caption-right',`${56-52*animated.side*lane}%`);
 
 
@@ -93,7 +103,7 @@ function draw(){if(animated.chapter<1.9)dropAnchor();const lane=smooth((animated
 }
 // Native scrolling owns the page. The arm's timed return never rewinds the document.
 function update(){
- gsap.ticker.add(tick);document.body.classList.toggle('past-hero',scrollY>=(markers[1]||950)-50);section=sectionAt(scrollY,sectionMarkers);if(inspecting)return;pose={...sampleStory(scrollY,markers),side:sideAtScroll(scrollY)};if(markers[2]&&scrollY<markers[3])pose.progress=1-clamp((scrollY-markers[2])/(markers[3]-markers[2]));if(!narrow.matches&&!reduced.matches){const pickupEnd=innerHeight*1.25;pose.pickup=scrollY<pickupEnd?.5*clamp(scrollY/pickupEnd):scrollY<dockScroll?.5+.05*clamp((scrollY-pickupEnd)/(dockScroll-pickupEnd)):.55+.45*clamp((scrollY-dockScroll)/(innerHeight*1.45));}
+ placeControls();gsap.ticker.add(tick);document.body.classList.toggle('past-hero',scrollY>=(markers[1]||950)-50);section=sectionAt(scrollY,sectionMarkers);if(inspecting)return;pose={...sampleStory(scrollY,markers),side:sideAtScroll(scrollY)};if(markers[2]&&scrollY<markers[3])pose.progress=1-clamp((scrollY-markers[2])/(markers[3]-markers[2]));if(!narrow.matches&&!reduced.matches){const pickupEnd=innerHeight*1.25;pose.pickup=scrollY<pickupEnd?.5*clamp(scrollY/pickupEnd):scrollY<dockScroll?.5+.05*clamp((scrollY-pickupEnd)/(dockScroll-pickupEnd)):.55+.45*clamp((scrollY-dockScroll)/(innerHeight*1.45));}
  const image=pose.chapter<1.35||pose.chapter>6.6?'assembled':'hero';if(poster&&image!==lastPoster){poster.src=`${import.meta.env.BASE_URL}images/${image}.webp`;poster.alt='Conceptual six-axis manipulator with off-white shells and metal joints.';lastPoster=image;}
  document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]').forEach(a=>{const id=a.hash.slice(1);const current=id===SECTIONS[section]||(id==='ecg'&&section>=SECTIONS.indexOf('ecg')&&section<=SECTIONS.indexOf('skinsight'));if(current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
  // The glyph must share the document's current scroll position, without catch-up inertia.

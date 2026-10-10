@@ -140,7 +140,7 @@ body{position:relative;background:var(--paper)}
 .site-header{border-bottom-color:var(--line)}
 .section-copy,.hero #hero-name-text,.hero-identity,.hero-bottom,.projects-anchor{background:transparent;box-shadow:none}
 #studio::before{display:none}
-.scene-actions{background:rgb(250 250 247 / .94);border:1px solid var(--line)}
+.scene-actions{background:rgba(250,250,247,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line)}
 .studio-topline span,.studio-baseline>span,.art-caption{background:transparent}
 .studio-baseline{color:var(--mono-label);opacity:1}
 .art-caption{color:var(--muted)}
@@ -164,8 +164,9 @@ body{position:relative;background:var(--paper)}
  #experience{padding:0 0 110svh}
  .story-section.skills-section{padding-bottom:110svh}
 }
-.experience-item{padding:16px 0}.experience-item.featured{padding-top:18px}
+.experience-item{padding:13.5px 0}.experience-item.featured{padding-top:18px}
 @media(max-width:800px){.story-section:not(.hero){padding-bottom:64px}}
 
 /* Reading progress: a 2px accent line along the top edge. */
 #scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--signal);opacity:.6;transform-origin:0 50%;transform:scaleX(0);z-index:50;pointer-events:none}
+@media(min-width:801px) and (prefers-reduced-motion:no-preference){.scene-actions{bottom:10px}body[data-arm-side=right] .scene-actions{left:auto!important;right:5%!important}}
