@@ -25,8 +25,14 @@ export const profile = {
   github: 'https://github.com/isaaac-afk',
   linkedin: 'https://www.linkedin.com/in/isaac-glenu7',
   tagline: 'Toward surgical robotics.',
-  // Shown in the hero beside the pulsing status light. Edit this one string to update it.
-  currentlyBuilding: 'real-time ECG arrhythmia detection on STM32',
+  // Shown in the hero beside the pulsing status light, rotating every five seconds.
+  currentActivities: [
+    { label: 'building', text: 'real-time ECG arrhythmia detection on STM32' },
+    { label: 'reading', text: 'Pattern Recognition and Machine Learning (Bishop)' },
+    { label: 'taking', text: 'BME 2A — biomechanics, electronics, physiology' },
+    { label: 'watching', text: 'Kardium, Intuitive Surgical, Stryker' },
+  ],
+  get currentlyBuilding() { return this.currentActivities[0].text; },
 };
 
 export const experience: Experience[] = [

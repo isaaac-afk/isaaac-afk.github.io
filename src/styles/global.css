@@ -170,3 +170,10 @@ body{position:relative;background:var(--paper)}
 /* Reading progress: a 2px accent line along the top edge. */
 #scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--signal);opacity:.6;transform-origin:0 50%;transform:scaleX(0);z-index:50;pointer-events:none}
 @media(min-width:801px) and (prefers-reduced-motion:no-preference){.scene-actions{bottom:10px}body[data-arm-side=right] .scene-actions{left:auto!important;right:5%!important}}
+
+/* Ambient biosignal monitor: above the studio gradient, below the arm (z 2) and the text (z 3). */
+#biosignals{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+/* Rotating hero activity: every item shares one grid cell, so the line never changes height. */
+.activity-stack{display:inline-grid;flex:1;min-width:0}
+.activity{grid-area:1/1;opacity:0;transition:opacity .2s ease-in-out}
+.activity.is-active{opacity:1}
